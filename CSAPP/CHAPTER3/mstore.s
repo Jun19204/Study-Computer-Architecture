@@ -1,21 +1,28 @@
 	.file	"mstore.c"
 	.text
-	.globl	multstore
-	.type	multstore, @function
-multstore:
-.LFB0:
+	.globl	multstore                       # -- Begin function multstore
+	.p2align	4
+	.type	multstore,@function
+multstore:                              # @multstore
 	.cfi_startproc
+# %bb.0:
 	pushq	%rbx
 	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
+	.cfi_offset %rbx, -16
 	movq	%rdx, %rbx
-	call	mult2
+                                        # fake_use: $rbx
+                                        # fake_use: $rsi
+                                        # fake_use: $rdi
+	callq	mult2
 	movq	%rax, (%rbx)
+                                        # fake_use: $rax
 	popq	%rbx
 	.cfi_def_cfa_offset 8
-	ret
+	retq
+.Lfunc_end0:
+	.size	multstore, .Lfunc_end0-multstore
 	.cfi_endproc
-.LFE0:
-	.size	multstore, .-multstore
-	.ident	"GCC: (GNU) 16.2.1 20260819 (Red Hat 16.2.1-2)"
-	.section	.note.GNU-stack,"",@progbits
+                                        # -- End function
+	.ident	"clang version 22.1.8 (Fedora 22.1.8-4.fc44)"
+	.section	".note.GNU-stack","",@progbits
+	.addrsig

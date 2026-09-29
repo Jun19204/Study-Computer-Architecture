@@ -1,30 +1,25 @@
+	.attribute	4, 16
+	.attribute	5, "rv64i2p1_m2p0_a2p1_c2p0_zmmul1p0_zaamo1p0_zalrsc1p0_zca1p0"
 	.file	"mstore.c"
-	.option nopic
-	.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0_zifencei2p0_zmmul1p0_zaamo1p0_zalrsc1p0_zca1p0_zcd1p0"
-	.attribute unaligned_access, 0
-	.attribute stack_align, 16
 	.text
-	.align	1
-	.globl	multstore
-	.type	multstore, @function
-multstore:
-.LFB0:
-	.cfi_startproc
-	addi	sp,sp,-32
-	.cfi_def_cfa_offset 32
-	sd	ra,24(sp)
-	.cfi_offset 1, -8
-	sd	a2,8(sp)
+	.globl	multstore                       # -- Begin function multstore
+	.p2align	1
+	.type	multstore,@function
+multstore:                              # @multstore
+# %bb.0:
+	addi	sp, sp, -16
+	sd	ra, 8(sp)                       # 8-byte Folded Spill
+	sd	s0, 0(sp)                       # 8-byte Folded Spill
+	mv	s0, a2
 	call	mult2
-	ld	a2,8(sp)
-	ld	ra,24(sp)
-	.cfi_restore 1
-	sd	a0,0(a2)
-	addi	sp,sp,32
-	.cfi_def_cfa_offset 0
-	jr	ra
-	.cfi_endproc
-.LFE0:
-	.size	multstore, .-multstore
-	.ident	"GCC: (GNU) 16.2.1 20260819 (Red Hat Cross 16.2.1-1)"
-	.section	.note.GNU-stack,"",@progbits
+	sd	a0, 0(s0)
+	ld	ra, 8(sp)                       # 8-byte Folded Reload
+	ld	s0, 0(sp)                       # 8-byte Folded Reload
+	addi	sp, sp, 16
+	ret
+.Lfunc_end0:
+	.size	multstore, .Lfunc_end0-multstore
+                                        # -- End function
+	.ident	"clang version 22.1.8 (Fedora 22.1.8-4.fc44)"
+	.section	".note.GNU-stack","",@progbits
+	.addrsig
